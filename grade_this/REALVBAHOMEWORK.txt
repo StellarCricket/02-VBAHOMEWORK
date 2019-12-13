@@ -1,0 +1,118 @@
+
+Sub WSLOOP()
+Dim ws As Worksheet
+For Each ws In Worksheets
+ws.Activate
+
+
+
+Next ws
+
+End Sub
+
+
+Sub Stocks():
+
+'Dim WS_Count As Integer
+'Dim w As Integer
+
+
+
+
+'For w = 1 To WSCount
+
+'Declaring Variables
+   Dim Yearly_Change As Double
+   Dim Stock_Volume As Double
+   Dim PercentYC As Double
+   Dim j As Integer
+   Dim start As Long
+   Dim lastrow As Long
+   Dim Jan As Double
+   Dim Dec As Double
+   
+  
+   
+   
+
+'Naming the cells, even if on other sheets
+
+Cells(1, 9).Value = "Ticker"
+Cells(1, 10).Value = "Yearly Change"
+Cells(1, 11).Value = "Percent Yearly Change"
+Cells(1, 12).Value = "Total Stock Volume"
+
+'Starting of the counts, for i will add to these numbers
+
+Stock_Volume = 0 'total
+Yearly_Change = 0 'change
+
+'I have no idea what j is for
+'j = 0
+
+
+Jan = Cells(2, 3)
+
+
+'starts placing the data at row 2
+start = 2 'start was formerly table row
+
+
+lastrow = Cells(Rows.Count, "A").End(xlUp).Row
+
+For i = 2 To lastrow
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+        Stock_Volume = Stock_Volume + Cells(i, 7).Value
+        
+           
+        Dec = Cells(i, 6)
+        Yearly_Change = Dec - Jan
+          
+        PercentYC = (Yearly_Change / Jan) * 100
+        
+        
+        
+        
+    Range("I" & start).Value = Cells(i, 1).Value
+    Range("J" & start).Value = Round(Yearly_Change, 2)
+    Range("K" & start).Value = "%" & PercentYC
+    Range("L" & start).Value = Stock_Volume
+    
+   
+    If Cells(start, 10).Value >= 0 Then
+        Cells(start, 10).Interior.ColorIndex = 4
+        
+        Else
+        Cells(start, 10).Interior.ColorIndex = 3
+        End If
+   
+   
+   
+   
+   
+        
+        PercentYC = 0
+        Yearly_Change = 0
+        Stock_Volume = 0
+   
+        start = start + 1
+        Jan = Cells(i + 1, 3)
+       
+         Else
+            Stock_Volume = Stock_Volume + Cells(i, 7).Value
+    
+     End If
+     
+     
+   
+ 
+   Next i
+
+
+
+
+
+End Sub
+
+
+
